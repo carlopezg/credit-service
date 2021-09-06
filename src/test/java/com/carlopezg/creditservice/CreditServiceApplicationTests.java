@@ -54,7 +54,7 @@ class CreditServiceApplicationTests {
     public void testCreditRejection() throws Exception {
         Map<String, Object> request = randomRequest("Startup", false);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("x-application-key", UUID.randomUUID().toString());
+        headers.add("x-user-id", new Random().longs(1000, 2000).findFirst().toString());
 
         String response = doPost(request, headers)
                 .andExpect(status().is(HttpStatus.OK.value()))
@@ -67,7 +67,7 @@ class CreditServiceApplicationTests {
     @Test
     public void testApprovedRateLimit() throws Exception {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("x-application-key", UUID.randomUUID().toString());
+        headers.add("x-forwarded-for", "187.161.8.193");
 
         int i = 1;
         for (; i <= 3; i++) {
@@ -88,7 +88,7 @@ class CreditServiceApplicationTests {
     @Test
     public void testRejectRateLimit() throws Exception {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("x-application-key", UUID.randomUUID().toString());
+        headers.add("x-user-id", new Random().longs(1000, 2000).findFirst().toString());
 
         String response = doPost(randomRequest("SME", false), headers)
                 .andExpect(status().is(HttpStatus.OK.value()))
