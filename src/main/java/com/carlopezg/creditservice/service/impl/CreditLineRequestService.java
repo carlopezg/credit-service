@@ -8,7 +8,6 @@ import com.carlopezg.creditservice.exception.CreditRetriesException;
 import com.carlopezg.creditservice.exception.InvalidCreditLineRequestException;
 import com.carlopezg.creditservice.exception.RateLimitExceededException;
 import com.carlopezg.creditservice.repository.CreditLineRequestRepository;
-import com.carlopezg.creditservice.service.LimiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +25,7 @@ public class CreditLineRequestService {
     RiskManagementService riskManagementService;
 
     @Autowired
-    LimiterService limiterService;
+    LimiterRedisService limiterService;
 
     public CreditLineResponseDto processCreditLineRequest(CreditLineRequestDto creditLineRequest, Map<String, String> headers)
             throws InvalidCreditLineRequestException, RateLimitExceededException, CreditRetriesException {
